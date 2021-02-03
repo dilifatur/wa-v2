@@ -516,12 +516,11 @@ async function starts() {
 		}
 	})
 }
-
+starts()
 expressApp.get('/', (req, res) => {
   res.send('Server Connect');
 });
 
 expressApp.listen('3000', () => {
-  starts()
   console.log(`Server running on port '3000`);
 });
