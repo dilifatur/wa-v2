@@ -518,7 +518,7 @@ async function starts() {
 }
 starts()
 expressApp.get('/', (req, res) => {
-  res.send('Server Connect');
+  res.send();
 });
 
 expressApp.listen('3000', () => {
