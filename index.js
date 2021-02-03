@@ -25,6 +25,8 @@ const nsfw = JSON.parse(fs.readFileSync('./src/nsfw.json'))
 const adminNumber = JSON.parse(fs.readFileSync('./src/admin.json'))
 const anime = JSON.parse(fs.readFileSync('./src/anime.json'))
 const samih = JSON.parse(fs.readFileSync('./src/simi.json'))
+const express = require('express');
+const expressApp = express();
 
 const vcard = 'BEGIN:VCARD\n' // ANAK ANJING MAU NGAPAIN?
             + 'VERSION:3.0\n' // NGAPAIN LAGI KALO GA MAU NUMPANG NAMA DOANG XIXIXIXI
@@ -514,4 +516,12 @@ async function starts() {
 		}
 	})
 }
-starts()
+
+expressApp.get('/', (req, res) => {
+  res.send('Server Connect');
+});
+
+expressApp.listen('3000', () => {
+  starts()
+  console.log(`Server running on port '3000`);
+});
