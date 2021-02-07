@@ -1,4 +1,7 @@
 const { formatCurrency } = require("@coingecko/cryptoformat");
+const fetch = require('node-fetch')
+var moment = require('moment'); // 
+require('moment-duration-format')
 
 const help = function(prefix) { 
 	return `                 
@@ -65,13 +68,40 @@ const market = function(id, market){
     h.forEach(i => {
         fin.push(`${i.name} ➻  ${formatCurrency(i.price.usd, "USD", "en")}`);
     })
-    
-    return `*Market (${id.toUpperCase()})*\n\n${fin.join('=>').replace(/=>/g,"\n")}`;
-    
+    return `
+┏━━°❀ ❬ *Market ${id.toUpperCase()}* ❭ ❀°━━┓
+┃  ${fin.join('=>').replace(/=>/g,"\n┃  ")}
+┗━━━━━━━━━━━━━━━━━━━━━━━`
 }
+
+const gas = async () => {
+    const data = await fetch('https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=DNCWUIR9GBCS7DIERYIIWPZ9Z2117IJ9ZZ').then(res => res.json())
+    const {LastBlock,SafeGasPrice, ProposeGasPrice, FastGasPrice} = data.result
+    const b = [SafeGasPrice,ProposeGasPrice,FastGasPrice]
+    const r = []
+    for(let i in b){
+        const da = await fetch(`https://api.etherscan.io/api?module=gastracker&action=gasestimate&gasprice=${b[i]*1000000000}&apikey=DNCWUIR9GBCS7DIERYIIWPZ9Z2117IJ9ZZ`).then(res => res.json());
+        let t;
+        if(da.result<100){
+            t = 'seconds'
+        }else{
+            t = 'minute'
+        }
+        r.push(`gwei : ${b[i]} time : ${moment.duration(da.result,"seconds").format("mm:ss")} ${t}`)
+    }
+    return `
+┏━━°❀ ❬ *Gas Tricker* ❭ ❀°━━┓
+┃  ${r.join('=>').replace(/=>/g,"\n┃  ")}
+┗━━━━━━━━━━━━━━━━━━━━━━━`
+}
+
+
+
+
 module.exports = {
     help,
     calc,
     price,
-    market
+    market,
+    gas
 }

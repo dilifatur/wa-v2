@@ -33,6 +33,8 @@
     "got": "^11.8.1",
     "imgbb-uploader": "^1.1.0",
     "lolis.life": "^4.0.0",
+    "moment": "^2.29.1",
+    "moment-duration-format": "^2.3.2",
     "moment-timezone": "^0.5.32",
     "multistream": "^2.1.0",
     "node-fetch": "^2.6.1",

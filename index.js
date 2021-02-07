@@ -6,7 +6,7 @@ const {
     GroupSettingChange
 } = require('@adiwajshing/baileys')
 const { color, bgcolor } = require('./lib/color')
-const { help, calc, market, price } = require('./src/help')
+const { help, calc, market, price, gas } = require('./src/help')
 const { wait, simih, getBuffer, h2k, generateMessageID, getGroupAdmins, getRandom, start, info, success, close} = require('./lib/functions')
 const {formatCurrency} = require('@coingecko/cryptoformat')
 const { fetchJson } = require('./lib/fetcher')
@@ -229,6 +229,10 @@ async function starts() {
 				        }
 				    }
 				break
+				case 'gas':
+				    //console.log(await gas())
+				    client.sendMessage(from, await gas(),text)
+				    break
 				case 'info':
 					me = client.user
 					uptime = process.uptime()
